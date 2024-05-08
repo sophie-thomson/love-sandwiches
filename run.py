@@ -70,5 +70,7 @@ def validate_data(values):
     # print(values) #print statement used to check if values printing from 
     # within the validate_data function instead of 
 
-#Call the function to run
-get_sales_data()
+# calls the function to run
+# define 'data' variable as the returned results of the get_sales_data() function
+
+data = get_sales_data()
