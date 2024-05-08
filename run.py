@@ -122,7 +122,19 @@ def calculate_surplus_data(sales_row):
     #print(surplus_data) # print used to check working functionality
     return surplus_data # send surplus_data list to the RAM for future use
 
+def update_surplus_worksheet(data): # data is information to insert
+    """
+    Update surplus worksheet, add new row with the list data provided.
+    """
+    # message to give user some feedback in the terminal while program runs
+    # also highlights the point in which code has got to when identifying bugs
+    print("Updating surplus worksheet...\n")
 
+    # access sales sheet so we can add data to it
+    surplus_worksheet = SHEET.worksheet("surplus")
+    # adds a new row to the worksheet using built-in append_row() function
+    surplus_worksheet.append_row(data)
+    print("Surplus worksheet updated successfully.\n")
 
 
 # function to hold all main funtions and call them at appropriate time
@@ -133,11 +145,15 @@ def main():
     data = get_sales_data()
     # creates a list called sales_data by appending an int for each object in the data string
     sales_data = [int(num) for num in data]
-    # calls update_sales_worksheet() function and passes it the sales_data list
+    # calls update_sales_worksheet() function and passes it the sales_data list that
+    # you want to insert
     update_sales_worksheet(sales_data)
-    # calls calculate_surplus_data() function and passes it the sales_data values
+    # calls calculate_surplus_data() function and passes it the sales_data
     new_surplus_data = calculate_surplus_data(sales_data)
     print(new_surplus_data)
+    # calls update_surplus_worksheet() function and passes it the new_surplus_data list 
+    # that you want to insert
+    update_surplus_worksheet(new_surplus_data)
 
 
 # first message you see before any functionality
