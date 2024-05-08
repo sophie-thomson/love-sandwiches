@@ -2,6 +2,7 @@
 
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 # Lists the APIs that the programme should access in order to run
 # Not changed - contant so written in capitals
@@ -93,9 +94,37 @@ def update_sales_worksheet(data): # data is information to insert
     print("Sales worksheet updated successfully.\n")
 
 
+def calculate_surplus_data(sales_row):
+    """
+    Compare sales with stock and calculate the surplus for each item type.
 
-data = get_sales_data()
-# creates a list called sales_data by appending an int for each object in the data string
-sales_data = [int(num) for num in data]
-# calls update_sales_worksheet() function and passes it the sales_data list
-update_sales_worksheet(sales_data)
+    The surplus is defined as the sales figure subtracted from the stock:
+    - Postive surplus indicates waste.
+    - Negative surplus indicates extra stock made when stock was sold out.
+    """
+    print("Calculating surplus data...\n")
+    # gets all data in the stock worksheet
+    stock = SHEET.worksheet("stock").get_all_values()
+    # pprint(stock) # prettyprint lays out print statement in more readable format
+    stock_row = stock[-1]
+    print(stock_row)
+
+
+
+# function to hold all main funtions and call them at appropriate time
+def main():
+    """
+    Run all program functions
+    """
+    data = get_sales_data()
+    # creates a list called sales_data by appending an int for each object in the data string
+    sales_data = [int(num) for num in data]
+    # calls update_sales_worksheet() function and passes it the sales_data list
+    update_sales_worksheet(sales_data)
+    # calls calculate_surplus_data() function and passes it the sales_data values
+    calculate_surplus_data(sales_data)
+
+
+# first message you see before any functionality
+print("Welcome to Love Sandwiches Data Automation!\n")
+main()
