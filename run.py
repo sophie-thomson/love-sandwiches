@@ -93,7 +93,7 @@ def update_sales_worksheet(data): # data is information to insert
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully.\n")
 
-
+# sales_row only referred to in the calculate_surplus_data function. Didn't already exist
 def calculate_surplus_data(sales_row):
     """
     Compare sales with stock and calculate the surplus for each item type.
@@ -107,7 +107,21 @@ def calculate_surplus_data(sales_row):
     stock = SHEET.worksheet("stock").get_all_values()
     # pprint(stock) # prettyprint lays out print statement in more readable format
     stock_row = stock[-1]
-    print(stock_row)
+    # print(f"stock row: {stock_row}") - #returns a list of strings from worksheet
+    # print(f"sales row: {sales_row}")
+
+
+    surplus_data = [] # defines the list name to add surplus data to
+    # iterates through each object in the list taking an item 'stock' from stock_row
+    # and sales from sales_row.
+    for stock, sales in zip(stock_row, sales_row):
+        # defines surplus as stock value minus sales value
+        surplus = int(stock) - sales
+        surplus_data.append(surplus) # adds each surplus value to the surplus_data list
+
+    #print(surplus_data) # print used to check working functionality
+    return surplus_data # send surplus_data list to the RAM for future use
+
 
 
 
@@ -122,7 +136,8 @@ def main():
     # calls update_sales_worksheet() function and passes it the sales_data list
     update_sales_worksheet(sales_data)
     # calls calculate_surplus_data() function and passes it the sales_data values
-    calculate_surplus_data(sales_data)
+    new_surplus_data = calculate_surplus_data(sales_data)
+    print(new_surplus_data)
 
 
 # first message you see before any functionality
