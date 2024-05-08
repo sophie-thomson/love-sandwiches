@@ -27,7 +27,10 @@ SHEET = GSPREAD_CLIENT.open("love_sandwiches")
 
 def get_sales_data():
     """
-    Function to get sales figures input from user
+    Function to get sales figures input from user.
+    Run a while loop to collect a valid string of data from the user 
+    via the terminal, which must be a string of 6 numbers separated
+    by commas. The loop will repeatedly request data, until it is valid.
     """
     while True: #loop to run same code every time an error is raised 
         print("Please enter sales data from the last market.")
@@ -46,7 +49,9 @@ def get_sales_data():
         # if statement to close while loop --- while True, it keeps 
         if validate_data(sales_data): #sales_data is the data that we want to check
             print("Data is valid!")
-            break 
+            break
+
+    return sales_data #important! Calls sales_data into the RAM to be used in next steps
 
 def validate_data(values):
     """
@@ -73,4 +78,24 @@ def validate_data(values):
 # calls the function to run
 # define 'data' variable as the returned results of the get_sales_data() function
 
+def update_sales_worksheet(data): # data is information to insert
+    """
+    Update sales worksheet, add new row with the list data provided.
+    """
+    # message to give user some feedback in the terminal while program runs
+    # also highlights the point in which code has got to when identifying bugs
+    print("Updating sales worksheet...\n")
+
+    # access sales sheet so we can add data to it
+    sales_worksheet = SHEET.worksheet("sales")
+    # adds a new row to the worksheet using built-in append_row() function
+    sales_worksheet.append_row(data)
+    print("Sales worksheet updated successfully.\n")
+
+
+
 data = get_sales_data()
+# creates a list called sales_data by appending an int for each object in the data string
+sales_data = [int(num) for num in data]
+# calls update_sales_worksheet() function and passes it the sales_data list
+update_sales_worksheet(sales_data)
