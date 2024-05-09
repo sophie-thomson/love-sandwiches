@@ -2,7 +2,6 @@
 
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
 
 # Lists the APIs that the programme should access in order to run
 # Not changed - contant so written in capitals
@@ -38,7 +37,7 @@ def get_sales_data():
         print("Data should be six numbers, separated by commas.")
         print("Example: 10,20,30,40,50,60\n")#\n added to create space between instructions and place to enter data
 
-        data_str = input("Enter your data here: ")
+        data_str = input("Enter your data here: \n")
         # print(f"The data provided is {data_str}") #print statement only used to check that input feature working
 
         # split() method returns the broken up values as a list instead of one long string
